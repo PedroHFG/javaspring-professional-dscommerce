@@ -88,6 +88,10 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
@@ -140,7 +144,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
