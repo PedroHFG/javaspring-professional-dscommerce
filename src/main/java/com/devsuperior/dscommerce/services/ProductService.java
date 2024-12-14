@@ -5,6 +5,7 @@ import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.dto.ProductMinDTO;
 import com.devsuperior.dscommerce.entities.Category;
 import com.devsuperior.dscommerce.entities.Product;
+import com.devsuperior.dscommerce.repositories.CategoryRepository;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
 import com.devsuperior.dscommerce.services.exceptions.DatabaseException;
 import com.devsuperior.dscommerce.services.exceptions.ResourceNotFoundException;
@@ -25,6 +26,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id){
@@ -89,8 +93,7 @@ public class ProductService {
 
         entity.getCategories().clear();
         for (CategoryDTO catDto: dto.getCategories()) {
-            Category cat = new Category();
-            cat.setId(catDto.getId());
+            Category cat = categoryRepository.getReferenceById(catDto.getId());
             entity.getCategories().add(cat);
         }
     }
